@@ -2,20 +2,21 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 const navImagePaths = [
   { name: 'Time Insights', path: '/images/security-time.png',href:'/time_insights'},
   { name: 'Smart Insights', path: '/images/temp_preferences_custom.png',href:'/smart_insights'},
   { name: 'Operating Cadence', path: '/images/chart.png',href:'/operating_cadence'},
-  { name: 'Managers', path: '/images/profile-2user.png'},
-  { name: 'Sellers', path: '/images/profile.png'},
-  { name: 'Team Management', path: '/images/people.png'},
-  { name: 'Settings', path: '/images/settings.png'},
-  { name: 'AI Chat', path: '/images/setting-2.png'},
+  { name: 'Managers', path: '/images/profile-2user.png',href:'/some'},
+  { name: 'Sellers', path: '/images/profile.png',href:'/somenath'},
+  { name: 'Team Management', path: '/images/people.png',href:'/subu'},
+  { name: 'Settings', path: '/images/settings.png',href:'/dubbu'},
+  { name: 'AI Chat', path: '/images/setting-2.png',href:'/gabbu'},
 ];
 
 const Sidebar = () => {
 const name="Shrutika Mane"
-  const [activeItem, setActiveItem] = useState<string|null>(null);
+const pathname = usePathname();
   const [hoveredItem, setHoveredItem] = useState<string|null>(null);
   return (
    <aside className="w-50 h-screen text-white flex flex-col overflow-y-scroll max-h-screen bg-[#253D61]">
@@ -73,29 +74,32 @@ const name="Shrutika Mane"
   </Link>
 
                 
-      <nav className="flex pt-[10px] mt-[85px] text-[D0E6FA] ">
-        <ul className='md:scroll-auto'>
-          {navImagePaths.map((item) => (
-            <li key={item.name} >
-              <a  onClick={() => setActiveItem(item.name)} onMouseEnter={() => setHoveredItem(item.name)}
-                onMouseLeave={() => setHoveredItem(null)}
-                className="flex items-center transition-colors" 
+      <nav className="flex pt-[10px] mt-[85px] text-[#D0E6FA]">
+      <ul className='w-full'>
+        {navImagePaths.map((item) => {
+          const isActive = pathname === item.href;
+
+          return (
+            <li key={item.name}>
+              <Link
                 href={item.href}
-                // className="flex items-center gap-3 p-2 transition-colors"
+                onMouseEnter={() => setHoveredItem(item.name)}
+                onMouseLeave={() => setHoveredItem(null)}
+                className="flex items-center transition-colors"
                 style={{
-                 backgroundColor:
-                  item.name === activeItem ? 'rgba(173, 206, 235, 0.3)': item.name === hoveredItem ? 'rgba(173, 206, 235, 0.1)'  : 'transparent', 
-                  width: '100%', 
-                  color:'#D0E6FA',
-                  textAlign:'center',
-                  fontWeight:400,
-                  fontFamily: 'Space Grotesk',
-                  fontSize:'20px',
-                  backgroundBlendMode:'screen',
-                  padding:'18px',
-                  marginRight:'8px',
-                  gap:'8px',
-                  paddingLeft:'24px'
+                  backgroundColor: isActive
+                    ? 'rgba(173, 206, 235, 0.3)' 
+                    : item.name === hoveredItem
+                    ? 'rgba(173, 206, 235, 0.1)' 
+                    : 'transparent',            
+                  width: '100%',
+                  color: '#D0E6FA',
+                  textAlign: 'left', 
+                  fontWeight: isActive ? 500 : 400, 
+                  fontFamily: 'Space Grotesk, sans-serif',
+                  fontSize: '20px',
+                  padding: '18px 8px 12px 24px', 
+                  gap: '8px',
                 }}
               >
                 <Image
@@ -105,12 +109,13 @@ const name="Shrutika Mane"
                   height={24}
                   className="flex-shrink-0"
                 />
-               <span className="font-space text-xl font-normal leading-none text-white truncate .opacity-100 p-[5px]">{item.name} </span>
-               </a>
+                <span className="truncate">{item.name}</span>
+              </Link>
             </li>
-          ))}
-        </ul>
-      </nav>
+          );
+        })}
+      </ul>
+    </nav>
       <div className="mt-auto fixed bottom-0 z-50 flex gap-3 items-center p-1 pr-0 bg-[#253D61] border-t border-[#B5D3EF] border-opacity-50">
          <Image
           src={'/images/mask group.png'}

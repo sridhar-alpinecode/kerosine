@@ -1,4 +1,5 @@
 import React from 'react';
+import ArrowIcon from './arrowicon';
 type StatCardProps = {
   title: string;
   value: string;
@@ -13,12 +14,12 @@ const StatCard = ({title,value,change = 0,expected,  hours,bgColorClass = "bg-[#
   const validChange = Number.isNaN(change) ? 0 : change;
 
   return (
-    <div className={`p-5 rounded-xl shadow-lg text-white flex flex-col justify-between max-w-screen-md  gap-[20px] ${bgColorClass}`}>
+    <div className={`p-5 rounded-[1vw] shadow-lg text-white flex flex-col justify-between max-w-screen-md  gap-[20px] ${bgColorClass}`}>
 
       <div>
         <div className="flex justify-between items-start mb-4">
           <div>
-            <p className="font-['Space_Grotesk'] text-[34px] !font-bold !text-[52px] leading-none tracking-normal uppercase text-[#86CB91]">{value}%</p>
+            <p className="font-['Space_Grotesk'] !font-[700px] !text-[52px] leading-none tracking-normal uppercase text-[#FFFFFF]" style={{fontWeight:'700px !important'}}>{value}%</p>
             <div className="flex items-center space-x-1.5 mt-1">
               <p className="text-sm text-gray-300 font-['Space_Grotesk'] pt-1">{title}</p>
               <div className="flex h-4 w-4 p-1 cursor-help items-center justify-center rounded-full bg-gray-500/30 text-xs font-semibold text-gray-200 ">
@@ -28,12 +29,17 @@ const StatCard = ({title,value,change = 0,expected,  hours,bgColorClass = "bg-[#
           </div>
 
           <div className={`text-center rounded-lg px-4 py-1.5 !font-bold !text-[52px] font-['Space_Grotesk'] ${isPositive ? 'bg-green-500/20' : 'bg-red-500/20'} pb-1`}>
-            <div className={`flex items-center text-sm font-['Space_Grotesk'] !text-[20px] font-semibold pb-1 ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
-              {isPositive ? '▲' : '▼'} {Math.abs(validChange)}%
+            <div className={`flex place-items-center text-sm font-['Space_Grotesk'] gap-0.5 !text-[20px] font-semibold pb-1 ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
+              {/* <span className=' flex place-items-center [width:0.5vw] [height:0.5vh] [font-size:0.8vw] leading-[0.5vh]'>{isPositive ? '▲' : '▼'} </span>{Math.abs(validChange)}% */}
+            <ArrowIcon 
+                direction={isPositive ? 'up' : 'down'} 
+                className="w-3 h-3" 
+            />
+            {Math.abs(validChange)}% 
             </div>
             <hr />
-            <div className="text-sm font-semibold !text-[20px] text-gray-300 mt-0.5 pt-1">
-              {hours}hrs
+            <div className="text-sm font-medium !text-[20px] text-gray-300 mt-0.5 pt-1 ">
+              {hours} hrs
             </div>
           </div>
         </div>
